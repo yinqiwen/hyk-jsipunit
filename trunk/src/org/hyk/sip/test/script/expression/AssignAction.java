@@ -5,9 +5,10 @@ package org.hyk.sip.test.script.expression;
 
 import java.text.ParseException;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 import bsh.EvalError;
 
@@ -18,17 +19,9 @@ import bsh.EvalError;
  */
 public class AssignAction extends Action
 {
-	@Attribute
+	@XmlAttribute
     private String expression;
-    public String getExpression()
-	{
-		return expression;
-	}
-
-	public void setExpression(String expression)
-	{
-		this.expression = expression;
-	}
+    
 
 	public int execute(SipSession session)
     {

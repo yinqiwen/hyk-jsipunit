@@ -6,9 +6,10 @@ package org.hyk.sip.test.script.expression;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 /**
  * @version 0.1.0
@@ -17,18 +18,8 @@ import org.xmappr.Attribute;
  */
 public class EchoAction extends Action
 {
-	@Attribute
+	@XmlAttribute
     private String message;
-
-    public String getMessage()
-	{
-		return message;
-	}
-
-	public void setMessage(String message)
-	{
-		this.message = message;
-	}
 
 	public int execute(SipSession session)
     {
@@ -38,7 +29,6 @@ public class EchoAction extends Action
 
     public void init() throws Exception
     {
-        System.out.println("####");
         
     }
     

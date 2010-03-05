@@ -13,36 +13,18 @@ import javax.sip.header.Header;
 import javax.sip.header.HeaderFactory;
 import javax.sip.message.Message;
 import javax.sip.message.MessageFactory;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 
 public class SendAction extends MessaeAction
 {
-	@Attribute
+	@XmlAttribute
     private boolean reliable;
-	public boolean isReliable()
-	{
-		return reliable;
-	}
-
-	public void setReliable(boolean reliable)
-	{
-		this.reliable = reliable;
-	}
-
-	@Attribute
+	@XmlAttribute
     private boolean dialog = true;
-    public boolean isDialog()
-	{
-		return dialog;
-	}
 
-	public void setDialog(boolean dialog)
-	{
-		this.dialog = dialog;
-	}
 
 	private List<Header> headers = new ArrayList<Header>();
     private List<String[]> headerVars = new LinkedList<String[]>();

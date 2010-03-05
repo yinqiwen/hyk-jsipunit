@@ -3,7 +3,9 @@
  */
 package org.hyk.sip.test;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
@@ -11,13 +13,14 @@ import java.util.Map;
 
 import javax.sip.address.URI;
 import javax.sip.message.Request;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
 import junit.framework.TestCase;
 
 import org.hyk.sip.test.script.SessionAction;
 import org.hyk.sip.test.session.SessionManager;
 import org.hyk.sip.test.session.SessionMatcher;
-import org.xmappr.Xmappr;
 
 
 
@@ -58,28 +61,24 @@ public abstract class HykSipUnitTestCase extends TestCase
         SessionAction[] actions = new SessionAction[scripts.length];
         for (int i = 0; i < scripts.length; i++)
         {
-        	Reader reader = null;
+        	InputStream is = null;
             if(isScriptInClasspath)
             {
-                //scripts[i] = "classpath:" + path + "/" + scripts[i];
-                reader = new InputStreamReader(getClass().getResourceAsStream(scripts[i]));
+            	is = getClass().getResourceAsStream(scripts[i]);
             }
             else
             {
                 scripts[i] = "file:"+ scripts[i];
             }
             
-            
-            Xmappr xm = new Xmappr(SessionAction.class);
-            //xm.
-            actions[i] = (SessionAction)xm.fromXML(reader);
+            JAXBContext context = JAXBContext.newInstance(SessionAction.class);
+			Unmarshaller unmarshaller = context.createUnmarshaller();
+            actions[i] = (SessionAction)unmarshaller.unmarshal(is);
             actions[i].init();
-           
-           //actions[i] = (SessionAction) scriptBuilder.build(scripts[i], docBuilder).get(0);
         }     
-        
-        Xmappr xm = new Xmappr(SessionManager.class);
-        SessionManager manager = (SessionManager)xm.fromXML(new FileReader("hyk-jsipunit.xml"));
+        JAXBContext context = JAXBContext.newInstance(SessionManager.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        SessionManager manager = (SessionManager)unmarshaller.unmarshal(new File("hyk-jsipunit.xml"));
         manager.init();
         if(this instanceof SessionMatcher)
         {

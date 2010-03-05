@@ -7,9 +7,10 @@ import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 /**
  * @version 0.1.0
@@ -18,47 +19,12 @@ import org.xmappr.Attribute;
  */
 public class RegexAction extends Action
 {
-	@Attribute
+	@XmlAttribute
     private String pattern;
-	public String getPattern()
-	{
-		return pattern;
-	}
 
-
-	public void setPattern(String pattern)
-	{
-		this.pattern = pattern;
-	}
-
-
-	public String getInput()
-	{
-		return input;
-	}
-
-
-	public void setInput(String input)
-	{
-		this.input = input;
-	}
-
-
-	public String getAssign()
-	{
-		return assign;
-	}
-
-
-	public void setAssign(String assign)
-	{
-		this.assign = assign;
-	}
-
-
-	@Attribute
+	@XmlAttribute
     private String input;
-	@Attribute
+	@XmlAttribute
     private String assign;
     private String[] vars;
 

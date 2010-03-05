@@ -32,35 +32,32 @@ import javax.sip.TransportNotSupportedException;
 import javax.sip.header.CallIdHeader;
 import javax.sip.message.Message;
 import javax.sip.message.Request;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hyk.sip.test.constant.Constants;
 import org.hyk.sip.test.dto.RemoteAddress;
 import org.hyk.sip.test.dto.TestConfig;
 import org.hyk.sip.test.script.SessionAction;
 import org.hyk.sip.test.stack.HykSipunitStack;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import org.xmappr.Attribute;
-//import org.xmappr.Element;
-//import org.xmappr.RootElement;
 
 /**
  * @version 0.1.0
  * @author Silvis Kingwon
  *
  */
-//@RootElement(name="hyk-jsipunit")
-@Root(name = "hyk-jsipunit")
+@XmlRootElement(name="hyk-jsipunit")
+//@Root(name = "hyk-jsipunit")
 public class SessionManager implements SipListener
 {
 	
 	static class ThreadPool
 	{
-		@Attribute(name="coresize")
-		int size;
+		@XmlAttribute(name="coresize")
+		public int size;
 		ScheduledThreadPoolExecutor threadpool;
 		
 		void init()
@@ -77,7 +74,7 @@ public class SessionManager implements SipListener
     //private Queue<SipSessionGroup> groups = new ConcurrentLinkedQueue<SipSessionGroup>();
     private Map<Integer, SipSessionGroup> notReadyGroups = new ConcurrentHashMap<Integer, SipSessionGroup>();
     
-    @Element(name="threadpool")
+    @XmlElement(name="threadpool")
     private ThreadPool threadpool;
     //private ScheduledThreadPoolExecutor threadpool = null;
     private TestConfig test;

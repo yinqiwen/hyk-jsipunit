@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
+<phone id="07556123" location="MRS">
+  <recv request="INVITE"/>
+  <send response="100" request="INVITE" optional="false"/>
+  <send response="180" request="INVITE" reliable="true"/>
+  <recv request="PRACK"/>
+  <send response="200" request="PRACK"/>
+  <recv request="CANCEL"/>
+  <send response="200" request="CANCEL"/>
+  <send response="487" request="INVITE"/>
+  <recv request="*"/>
+</phone>

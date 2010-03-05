@@ -12,9 +12,10 @@ import org.hyk.sip.test.session.SipSession;
  */
 public class ElseAction extends ControlAction
 {
+	
     int fiActionDistance = -1;
 
-   
+    
     public int execute(SipSession session)
     {
         return fiActionDistance;

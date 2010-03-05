@@ -9,47 +9,19 @@ import javax.sip.header.Header;
 import javax.sip.message.Message;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 public class RecvAction extends MessaeAction implements Runnable
 {
-	@Attribute
+	@XmlAttribute
     private long time = 60000;
-	public long getTime()
-	{
-		return time;
-	}
 
-	public void setTime(long time)
-	{
-		this.time = time;
-	}
-
-	@Attribute
+	@XmlAttribute
     private boolean reliable;
-	public boolean isReliable()
-	{
-		return reliable;
-	}
 
-	public void setReliable(boolean reliable)
-	{
-		this.reliable = reliable;
-	}
-
-	public boolean isOptional()
-	{
-		return optional;
-	}
-
-	public void setOptional(boolean optional)
-	{
-		this.optional = optional;
-	}
-
-	@Attribute
+	@XmlAttribute
     private boolean optional = false;
     
 

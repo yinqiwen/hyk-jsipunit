@@ -1,42 +1,20 @@
 package org.hyk.sip.test.script.expression;
 
 
-import java.text.ParseException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 public class WaitAction extends Action implements Runnable
 {
-	@Attribute
+	@XmlAttribute
     private String condition;
-	public String getCondition()
-	{
-		return condition;
-	}
 
-
-	public void setCondition(String condition)
-	{
-		this.condition = condition;
-	}
-
-
-	public long getTime()
-	{
-		return time;
-	}
-
-
-	public void setTime(long time)
-	{
-		this.time = time;
-	}
-
-	@Attribute
+	@XmlAttribute
     private long time = 60000;
     private SipSession session;
     private ScheduledFuture timerTask;

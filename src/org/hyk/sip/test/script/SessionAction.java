@@ -6,6 +6,11 @@ package org.hyk.sip.test.script;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.hyk.sip.test.script.control.ControlAction;
 import org.hyk.sip.test.script.control.ElseAction;
 import org.hyk.sip.test.script.control.EndWhileAction;
@@ -21,80 +26,85 @@ import org.hyk.sip.test.script.expression.WaitAction;
 import org.hyk.sip.test.script.message.RecvAction;
 import org.hyk.sip.test.script.message.SendAction;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
-import org.xmappr.Element;
-import org.xmappr.Elements;
-import org.xmappr.RootElement;
-
-import com.sun.media.rtsp.protocol.PauseMessage;
 
 /**
  * @version 0.1.0
  * @author Silvis Kingwon
  * 
  */
-@RootElement("phone")
+@XmlRootElement(name = "phone")
 public class SessionAction
 {
-	@Attribute("id")
+
+	@XmlAttribute
 	private String			id;
 
-	@Attribute("location")
+	@XmlAttribute
 	private String			location;
 
-	@Attribute("remote-phone")
+	@XmlAttribute(name="remote-phone")
 	private String			remotePhone;
 
-	@Attribute("remote-location")
+	@XmlAttribute(name="remote-location")
 	private String			remoteLocation;
 
 	private URIType			uriType	= URIType.SIP;
 	private boolean			isPassiveMode;
 
-	@Elements( {@Element(name = "send", targetType = SendAction.class), @Element(name = "recv", targetType = RecvAction.class),
-			@Element(name = "pause", targetType = WaitAction.class), @Element(name = "assign", targetType = AssignAction.class),
-			@Element(name = "echo", targetType = EchoAction.class), @Element(name = "if", targetType = IfAction.class),
-			@Element(name = "else", targetType = ElseAction.class), @Element(name = "fi", targetType = FiAction.class),
-			@Element(name = "while", targetType = WhileAction.class), @Element(name = "done", targetType = EndWhileAction.class),
-			@Element(name = "assert", targetType = AssertAction.class), @Element(name = "regex", targetType = RegexAction.class),
-			@Element(name = "reset", targetType = ResetAction.class)})
+	@XmlElements( {@XmlElement(name = "send", type = SendAction.class), @XmlElement(name = "recv", type = RecvAction.class),
+		@XmlElement(name = "pause", type = WaitAction.class), @XmlElement(name = "assign", type = AssignAction.class),
+		@XmlElement(name = "echo", type = EchoAction.class), @XmlElement(name = "if", type = IfAction.class),
+		@XmlElement(name = "else", type = ElseAction.class), @XmlElement(name = "fi", type = FiAction.class),
+		@XmlElement(name = "while", type = WhileAction.class), @XmlElement(name = "done", type = EndWhileAction.class),
+		@XmlElement(name = "assert", type = AssertAction.class), @XmlElement(name = "regex", type = RegexAction.class),
+		@XmlElement(name = "reset", type = ResetAction.class)})
 	private List<Action>	actions;
-	public void setActions(List<Action> actions)
-	{
-		this.actions = actions;
-	}
 
 	private int				cursor	= 0;
 	private int				actionSize;
 
-	public List<Action> getActions()
-	{
-		return actions;
-	}
+//	
+//	public List<Action> getActions()
+//	{
+//		return actions;
+//	}
+//
+//	public void setActions(List<Action> actions)
+//	{
+//		this.actions = actions;
+//	}
+//	
+//	public void addActions(Action actions)
+//	{
+//		//this.actions = actions;
+//	}
 
 	public void reset()
 	{
 		cursor = 0;
 	}
 
-	public void setRemoteLocation(String remoteLocation)
-	{
-		this.remoteLocation = remoteLocation;
-	}
+//	
+//	public void setRemoteLocation(String remoteLocation)
+//	{
+//		this.remoteLocation = remoteLocation;
+//	}
 
-	public void setId(String id)
-	{
-		this.id = id;
-	}
+
 
 	public String getId()
 	{
 		return id;
 	}
 
-	public void setRemotePhone(String remotePhone)
+	public String getRemotePhone()
 	{
-		this.remotePhone = remotePhone;
+		return remotePhone;
+	}
+
+	public String getRemoteLocation()
+	{
+		return remoteLocation;
 	}
 
 	public String getLocation()
@@ -102,14 +112,8 @@ public class SessionAction
 		return location;
 	}
 
-	public void setLocation(String location)
-	{
-		this.location = location;
-	}
-
 	public void init() throws Exception
 	{
-		System.out.println("####" + id);
 		actionSize = actions.size();
 		for(int i = 0; i < actions.size(); i++)
 		{
@@ -129,16 +133,6 @@ public class SessionAction
 		}
 
 		ControlAction.sortAndInitControlAction(actions);
-	}
-
-	public String getRemotePhone()
-	{
-		return remotePhone;
-	}
-
-	public String getRemoteLocation()
-	{
-		return remoteLocation;
 	}
 
 	public URIType getURIType()

@@ -15,8 +15,8 @@ import javax.sip.SipFactory;
 import javax.sip.SipProvider;
 import javax.sip.SipStack;
 import javax.sip.TransportNotSupportedException;
+import javax.xml.bind.annotation.XmlAttribute;
 
-import org.xmappr.Attribute;
 
 /**
  * @version 0.1.0
@@ -28,11 +28,11 @@ public class HykSipunitStack
     private static final String DEFAULT_IMPL = "gov.nist";
     private static final int DEFAULT_PORT = 5060;
     
-    @Attribute
+    @XmlAttribute
     private String name;
-    @Attribute
+    @XmlAttribute
     private String host;
-    @Attribute
+    @XmlAttribute
     private int port = DEFAULT_PORT;
     private String impl = DEFAULT_IMPL;
     

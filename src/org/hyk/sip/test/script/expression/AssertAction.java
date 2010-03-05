@@ -4,9 +4,11 @@
 package org.hyk.sip.test.script.expression;
 
 import java.text.ParseException;
+
+import javax.xml.bind.annotation.XmlAttribute;
+
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
-import org.xmappr.Attribute;
 
 import bsh.EvalError;
 
@@ -17,18 +19,8 @@ import bsh.EvalError;
  */
 public class AssertAction extends Action
 {
-	@Attribute
+	@XmlAttribute
     private String condition;
-   
-    public String getCondition()
-	{
-		return condition;
-	}
-
-	public void setCondition(String condition)
-	{
-		this.condition = condition;
-	}
 
 	public int execute(SipSession session)
     {

@@ -102,6 +102,8 @@ public class SipSession implements Runnable
                
                 ((SipURI)fromUri).setPort(group.getSessionManager().getHykSipunitStack(action.getLocation()).getPort());
                 //((SipURI)contactUri).setPort(group.getSessionManager().getHykSipunitStack(action.getLocation()).getPort());
+                //System.out.println(group);
+               // System.out.println(group.getSessionManager());
                 String remoteHost = group.getSessionManager().getRemoteAddress(action.getRemoteLocation()).getHost();
                 toUri = Constants.addressFactory.createSipURI(action.getRemotePhone(),remoteHost);
                 ((SipURI)toUri).setPort(group.getSessionManager().getRemoteAddress(action.getRemoteLocation()).getPort());

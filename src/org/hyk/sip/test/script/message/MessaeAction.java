@@ -52,6 +52,7 @@ public abstract class MessaeAction extends Action
 	public void setBody(String body)
 	{
 		this.body = body;
+		
 		if(null != this.body && !this.body.trim().equals(""))
 		{
 			String[] lines = this.body.split("\\r\\n|[\\r\\n]");

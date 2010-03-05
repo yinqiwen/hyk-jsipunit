@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
+<phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
+   <send request="INVITE">
+      <header>Supported:100rel</header>
+      <header>Require:100rel</header>
+      <header>Content-Type:application/sdp</header>
+      <body>
+             o=4855 13760799956958020 13760799956958020 IN IP4  129.6.55.78
+             s=mysession session
+			 p=+46 8 52018010
+			 c=IN IP4  129.6.55.78
+             t=0 0
+             m=audio 6022 RTP/AVP 0 4 18
+		     a=rtpmap:0 PCMU/8000
+		     a=rtpmap:4 G723/8000
+			 a=rtpmap:18 G729A/8000
+			 a=ptime:20
+      </body>
+   </send>
+   <recv response="100" request="INVITE"/>
+   <recv response="180" request="INVITE" reliable="true"/>
+   <send request="PRACK"/>
+   <recv response="200" request="PRACK"/>
+   
+  <pause time="2000"/>
+  <send request="CANCEL"/>
+  <recv response="200" request="CANCEL"/>
+  <recv response="487" request="INVITE"/>
+   <!--  no need to send ack, stack can send automatically-->
+   <!--<send request="ACK"/>-->
+
+</phone>

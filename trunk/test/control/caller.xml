@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
+<phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
+   <assign expression="$x=0"/>
+   <assign expression="$y=1+2*3+5.6"/>
+   <echo message="y=$y"/> 
+   <if condition="$x!=1"/>
+      <echo message="Hello,wolrd!"/>
+   <else/>
+      <echo message="Silvis Kingwon!"/>   
+   <fi/>
+   <while condition="$x!=10"/>
+      <echo message="x=$x,y=$y"/>
+      <assign expression="++$x"/>
+      <if condition="$x==5"/>
+          <echo message="Got 5 one time!"/>   
+      <fi/>
+   <done/>
+   <assert condition="$x==10"/>
+   <assign expression="$input=$STDIN.read()"/>
+   <echo message="Got input $input"/> 
+   <assign expression="$input=hello100world255"/>
+   <regex assign="$num1,$num2" pattern="hello([0-9]*)world([0-9]*)" input="$input"/>
+   <echo message="Got $num1 and $num2!"/> 
+</phone>

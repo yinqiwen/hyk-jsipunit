@@ -23,7 +23,7 @@ public class EchoAction extends Action
 
 	public int execute(SipSession session)
     {
-       
+       System.out.println(message);
         return 1;
     }
 

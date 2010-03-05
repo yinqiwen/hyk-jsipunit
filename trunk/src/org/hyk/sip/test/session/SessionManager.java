@@ -50,7 +50,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 @XmlRootElement(name="hyk-jsipunit")
-//@Root(name = "hyk-jsipunit")
 public class SessionManager implements SipListener
 {
 	
@@ -97,7 +96,7 @@ public class SessionManager implements SipListener
         sessionMather = matcher;
     }
     
-  
+    @XmlElement(name="sipstack")
     public void setSipStack(HykSipunitStack stack)
     {
         stacks.put(stack.getName(), stack);
@@ -113,7 +112,8 @@ public class SessionManager implements SipListener
         return remotes.get(name);
     }
     
-    public void addRemote(RemoteAddress remote)
+    @XmlElement(name="remote")
+    public void setRemote(RemoteAddress remote)
     {
         remotes.put(remote.getName(), remote);
     }

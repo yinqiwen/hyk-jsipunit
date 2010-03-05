@@ -47,11 +47,7 @@ public abstract class HykSipUnitTestCase extends TestCase
             URI uri = incomingRequest.getRequestURI();
             return uri.toString().contains(id);
         }
-        
     }
-    
-    
-
     
     public abstract String[] getScriptLocations();
     

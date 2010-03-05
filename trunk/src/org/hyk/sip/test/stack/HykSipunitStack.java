@@ -45,29 +45,6 @@ public class HykSipunitStack
     {
         return name;
     }
-    public HykSipunitStack()
-    {
-        
-    }
-    
-    public void setName(String name)
-    {
-        this.name = name;   
-    }
-    public void setHost(String host)
-    {
-        this.host = host;   
-    }
-    public void setPort(int port)
-    {
-        this.port = port;   
-    }
-    
-    public void setImpl(String impl)
-    {
-        this.impl = impl;
-    }
-   
     
     public void init() throws PeerUnavailableException, TransportNotSupportedException, InvalidArgumentException, ObjectInUseException, UnknownHostException
     {

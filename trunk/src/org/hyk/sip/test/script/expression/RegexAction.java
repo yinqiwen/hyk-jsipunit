@@ -32,20 +32,28 @@ public class RegexAction extends Action
     {
         //Expression expression = new Expression(session.getSipSessionGroup().getVariableManager());
         Pattern p = Pattern.compile(pattern);
-        Object value = null;
+        String value = null;
         try
         {
-            value = interpreter.eval(input);
+        	if(null != session.getInterpreter().get(input))
+        	{
+        		value = session.getInterpreter().get(input).toString();
+        	}
+        	else
+        	{
+        		value = input;
+        	}
             if(null != value)
             {
-                Matcher m = p.matcher(value.toString());
+                Matcher m = p.matcher(value);
                 if(m.matches())
                 {
                     int varnum = m.groupCount();
+                    String[] assn = assign.split(",");
                     for (int i = 0; i < varnum; i++)
                     {
-                        //Variable var = session.getSipSessionGroup().getVariableManager().createVariable(vars[i]);
-                        //var.setValue(m.group(i+1));
+                    	String pv = m.group(i+1);
+                    	session.getInterpreter().set(assn[i], pv);
                     }
                 }
                 else

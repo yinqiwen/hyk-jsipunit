@@ -31,7 +31,7 @@ public class IfAction extends ControlAction
         //expression.setExpression(condition);
         try
         {
-            Boolean b = (Boolean) (interpreter.eval(condition));
+            Boolean b = (Boolean) (session.getInterpreter().eval(condition));
             if(b)
             {
                 return 1;

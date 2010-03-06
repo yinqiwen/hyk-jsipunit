@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
 <phone id="07556123" location="MRS" remote-phone="07556123" remote-location="AS">
   <recv request="OPTIONS"/>
   <send response="200" request="OPTIONS"/>
-   <if condition="$x!=9"/>
+   <if condition="x!=9"/>
       <reset/>    
    <fi/>
 </phone>

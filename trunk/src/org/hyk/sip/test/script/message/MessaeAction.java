@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
 import org.hyk.sip.test.script.Action;
+import org.hyk.sip.test.script.VarString;
 
 /**
  * @version 0.1.0
@@ -27,9 +28,9 @@ public abstract class MessaeAction extends Action
 	protected int			response	= -1;
 	
 	@XmlElements(@XmlElement(name = "header"))
-	protected List<String>	headerValues;
+	protected List<VarString>	headerValues = new ArrayList<VarString>();
 
-	protected String		body;
+	protected VarString		body;
 	protected List<Header>	headers		= new ArrayList<Header>();
 
 	@XmlAttribute
@@ -49,25 +50,20 @@ public abstract class MessaeAction extends Action
 	}
 
 	@XmlElement
-	public void setBody(String body)
+	public void setBody(VarString body)
 	{
 		this.body = body;
 		
-		if(null != this.body && !this.body.trim().equals(""))
+		if(null != this.body )
 		{
-			String[] lines = this.body.split("\\r\\n|[\\r\\n]");
+			String[] lines = this.body.getFormat().split("\\r\\n|[\\r\\n]");
 			StringBuilder buffe = new StringBuilder();
 			for(int i = 0; i < lines.length; i++)
 			{
 				buffe.append(lines[i].trim()).append("\r\n");
 			}
-			this.body = buffe.toString();
+			this.body.setFormat(buffe.toString());
 		}
-	}
-
-	public void addHeader(String header)
-	{
-		headerValues.add(header);
 	}
 
 	public abstract void init() throws Exception;

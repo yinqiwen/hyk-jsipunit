@@ -37,8 +37,12 @@ import javax.sip.message.Response;
 
 import org.apache.log4j.Logger;
 import org.hyk.sip.test.constant.Constants;
+import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.script.SessionAction;
 import org.hyk.sip.test.script.URIType;
+import org.hyk.sip.test.script.expression.ExpressionListener;
+
+import bsh.Interpreter;
 
 public class SipSession implements Runnable
 {
@@ -67,8 +71,9 @@ public class SipSession implements Runnable
     private Response reliableResponse;
     private HashMap<String, ServerTransaction> serverTransactions = new HashMap<String, ServerTransaction>();
     private HashMap<String, ClientTransaction> clientTransactions = new HashMap<String, ClientTransaction>();
-    
-    private Semaphore semaphore = new Semaphore(1);
+    //protected Interpreter interpreter = new Interpreter();
+   
+	private Semaphore semaphore = new Semaphore(1);
     
     SipSession(SipProvider provider, SessionAction action, ScheduledThreadPoolExecutor timer, SipSessionGroup group) throws Exception
     {
@@ -124,6 +129,12 @@ public class SipSession implements Runnable
         contact_header = Constants.headerFactory.createContactHeader(Constants.addressFactory.createAddress(contactUri));
     }
     
+    public Interpreter getInterpreter()
+	{
+		return group.interpreter;
+	}
+
+    
     public boolean isReady()
     {
         return ready;
@@ -173,7 +184,7 @@ public class SipSession implements Runnable
         try
         {
             recvMsg.add(message);
-            //storeMessageVariable(message);
+            storeMessageVariable(message);
         } catch (Exception e)
         {
             // TODO Auto-generated catch block
@@ -195,7 +206,7 @@ public class SipSession implements Runnable
         String method = transc.getRequest().getMethod();
         dialog = transc.getDialog();
         if(transc instanceof SIPServerTransaction)
-        {       
+        {  
             serverTransactions.put(method, (ServerTransaction) transc);
         }
     }
@@ -335,8 +346,15 @@ public class SipSession implements Runnable
     
     public boolean sendResponse(int response, String method, List<Header> addedHeaders, String body, boolean reliable) throws ParseException, SipException, InvalidArgumentException
     {
-        Response msg = null;       
+        Response msg = null;      
         ServerTransaction serverTansc = serverTransactions.get(method);
+        if(null == serverTansc)
+        {
+        	Exception e = new Exception();
+        	e.printStackTrace();
+        	
+        	return false;
+        }
         dialog = serverTansc.getDialog();
         if(null != serverTansc)
         {
@@ -399,5 +417,17 @@ public class SipSession implements Runnable
         }
         
         group.notifySessionFailed(this);
+    }
+    
+    public void notifyExpressionExecuted()
+    {
+    	if(null != action.getCurrentAction())
+    	{
+    		Action ac = action.getCurrentAction();
+    		if(ac instanceof ExpressionListener)
+    		{
+    			((ExpressionListener)ac).afterExpressionExecuted();
+    		}
+    	}
     }
 }

@@ -1,22 +1,23 @@
 <?xml version="1.0"?>
 
-<project name="hyk-sipunit++" default="release">
+<project name="hyk-jsipunit" default="release">
 	<property name="root" value="." />
 
-	<property name='dist_jar' value='hyk-sipunit++.jar' />
+	<property name='dist_jar' value='hyk-jsipunit.jar' />
 	<property name="classes" value="${root}/build" />
-	<property name="distroot" value="${root}/dist" />
+	<property name="distroot" value="${root}/lib" />
 	<property name="docdir" value="${root}/doc" />
 	<property name="srcroot" value="${root}/src" />
 	<property name="testroot" value="${root}/test" />
 	<property name="junit_jar" value="${root}/lib/junit.jar" />
-	<property name="log_jar" value="${root}/lib/log4j-1.2.8.jar" />
-	<property name="sip_jar" value="${root}/lib/sip-sdp.jar" />
-	<property name="framework_jar" value="${root}/lib/hyk-framework.jar" />
-	<property name="expression_jar" value="${root}/lib/hyk-expression.jar" />
-	<property name="version" value="0.1.1" />
+	<property name="log_jar" value="${root}/lib/log4j-1.2.14.jar" />
+	<property name="sl4j_jar" value="${root}/lib/slf4j-api-1.5.10.jar" />
+	<property name="sip_jar" value="${root}/lib/jain-sip-sdp-1.2.102.jar" />
+	<property name="bsh_jar" value="${root}/lib/bsh-2.0b4.jar" />
+
+	<property name="version" value="0.2.0beta" />
 	<property name="release" value="release" />
-	<property name="project_name" value="hyk-sipunit++" />
+	<property name="project_name" value="hyk-jsipunit" />
 
 	<target name="prepare">
 	    <mkdir dir="${classes}"/>
@@ -24,13 +25,13 @@
 	</target>
 	
 	<target name="compile" depends="prepare">
-	    <javac debug="on" target="1.5" source="1.5" srcdir="${srcroot}" destdir="${classes}" >
+	    <javac debug="on" srcdir="${srcroot}" destdir="${classes}" >
 	        <classpath>
 	        	<pathelement location="${junit_jar}" />
 	        	<pathelement location="${log_jar}" />
+	        	<pathelement location="${sl4j_jar}" />
 	        	<pathelement location="${sip_jar}" />
-	        	<pathelement location="${framework_jar}" />
-	        	<pathelement location="${expression_jar}" />
+	        	<pathelement location="${bsh_jar}" />
 	        </classpath>	
 	    </javac>
 	</target>
@@ -61,12 +62,6 @@
 	    		<include name="README"/>
 	    		<include name="CHANGELOG"/>
 	    		<include name="TODO"/>
-	    		<exclude name="**/*.jar"/>
-	    		<exclude name="**/log4j*.jar"/>
-	    		<exclude name="**/concurrent.jar"/>
-	    		<exclude name="**/junit.jar"/>
-	    		<exclude name="**/sip-sdp.jar"/>
-	    		<exclude name="**/hyk-framework.jar"/>
 	    	</fileset>
 	    </copy>
 		<zip destfile="${project_name}-${version}.zip" basedir="${release}"/>

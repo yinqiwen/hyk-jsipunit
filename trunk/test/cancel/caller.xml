@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
 <phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
    <send request="INVITE">
       <header>Supported:100rel</header>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
 <phone id="07556123" location="MRS">
   <recv request="INVITE"/>
   <send response="100" request="INVITE" optional="false"/>

@@ -26,7 +26,7 @@ public class AssertAction extends Action
     {
         try
         {
-            Boolean b = (Boolean) (interpreter.eval(condition));
+            Boolean b = (Boolean) (session.getInterpreter().eval(condition));
             if(b)
             {
                 return 1;

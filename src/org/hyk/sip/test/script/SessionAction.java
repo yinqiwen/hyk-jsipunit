@@ -19,8 +19,8 @@ import org.hyk.sip.test.script.control.IfAction;
 import org.hyk.sip.test.script.control.ResetAction;
 import org.hyk.sip.test.script.control.WhileAction;
 import org.hyk.sip.test.script.expression.AssertAction;
-import org.hyk.sip.test.script.expression.AssignAction;
 import org.hyk.sip.test.script.expression.EchoAction;
+import org.hyk.sip.test.script.expression.ExecuteAction;
 import org.hyk.sip.test.script.expression.RegexAction;
 import org.hyk.sip.test.script.expression.WaitAction;
 import org.hyk.sip.test.script.message.RecvAction;
@@ -52,45 +52,21 @@ public class SessionAction
 	private boolean			isPassiveMode;
 
 	@XmlElements( {@XmlElement(name = "send", type = SendAction.class), @XmlElement(name = "recv", type = RecvAction.class),
-		@XmlElement(name = "pause", type = WaitAction.class), @XmlElement(name = "assign", type = AssignAction.class),
+		@XmlElement(name = "pause", type = WaitAction.class), @XmlElement(name = "execute", type = ExecuteAction.class),
 		@XmlElement(name = "echo", type = EchoAction.class), @XmlElement(name = "if", type = IfAction.class),
 		@XmlElement(name = "else", type = ElseAction.class), @XmlElement(name = "fi", type = FiAction.class),
 		@XmlElement(name = "while", type = WhileAction.class), @XmlElement(name = "done", type = EndWhileAction.class),
 		@XmlElement(name = "assert", type = AssertAction.class), @XmlElement(name = "regex", type = RegexAction.class),
-		@XmlElement(name = "reset", type = ResetAction.class)})
+		@XmlElement(name = "reset", type = ResetAction.class),@XmlElement(name = "wait", type = WaitAction.class)})
 	private List<Action>	actions;
 
 	private int				cursor	= 0;
 	private int				actionSize;
 
-//	
-//	public List<Action> getActions()
-//	{
-//		return actions;
-//	}
-//
-//	public void setActions(List<Action> actions)
-//	{
-//		this.actions = actions;
-//	}
-//	
-//	public void addActions(Action actions)
-//	{
-//		//this.actions = actions;
-//	}
-
 	public void reset()
 	{
 		cursor = 0;
 	}
-
-//	
-//	public void setRemoteLocation(String remoteLocation)
-//	{
-//		this.remoteLocation = remoteLocation;
-//	}
-
-
 
 	public String getId()
 	{
@@ -118,6 +94,7 @@ public class SessionAction
 		for(int i = 0; i < actions.size(); i++)
 		{
 			Action ac = actions.get(i);
+			ac.init();
 			if(ac instanceof SendAction)
 			{
 				isPassiveMode = false;
@@ -128,8 +105,6 @@ public class SessionAction
 				isPassiveMode = true;
 				break;
 			}
-			ac.init();
-
 		}
 
 		ControlAction.sortAndInitControlAction(actions);
@@ -175,5 +150,14 @@ public class SessionAction
 		}
 
 		return false;
+	}
+	
+	public Action getCurrentAction()
+	{
+		if(cursor < actionSize)
+		{
+			return actions.get(cursor);
+		}
+		return null;
 	}
 }

@@ -13,6 +13,8 @@ import javax.sip.message.Request;
 
 import org.hyk.sip.test.script.SessionAction;
 
+import bsh.Interpreter;
+
 /**
  * @version 0.1.0
  * @author Silvis Kingwon
@@ -28,11 +30,12 @@ public class SipSessionGroup implements Runnable
     private int sessionCompleteNum = 0;
     Map<String, Message> recvMsgs = new ConcurrentHashMap<String, Message>();
     Map<String, String> recvBodys = new ConcurrentHashMap<String, String>();
-    private static final String RECV_MSGS = "$RECV_MSGS";
-    private static final String RECV_BODYS = "$RECV_BODYS";
-    //Variable varRecvMsgs;
-   // Variable varRecvBodys;
-    StringBuffer failCause = new StringBuffer();
+    private static final String RECV_MSGS = "RECV_MSGS";
+    private static final String RECV_BODYS = "RECV_BODYS";
+    protected Interpreter interpreter = new Interpreter();
+    
+
+	StringBuffer failCause = new StringBuffer();
     
     public SipSessionGroup(SessionAction[] actions, SessionManager manager) throws Exception
     {
@@ -44,6 +47,8 @@ public class SipSessionGroup implements Runnable
         {
             sessions[i] = new SipSession(manager.getSipProviderByName(actions[i].getLocation()), actions[i], threadpool, this);
         }
+        interpreter.set(RECV_MSGS, recvMsgs);
+        interpreter.set(RECV_BODYS, recvBodys);
 //        varRecvMsgs = varManager.createVariable(RECV_MSGS);
 //        varRecvMsgs.setValue(recvMsgs);
 //        varRecvBodys = varManager.createVariable(RECV_BODYS);
@@ -54,6 +59,12 @@ public class SipSessionGroup implements Runnable
     {
         return manager;
     }
+    
+    public Interpreter getInterpreter()
+	{
+		return interpreter;
+	}
+
     
 //    public String replaceVariableReference(String input)
 //    {
@@ -117,7 +128,15 @@ public class SipSessionGroup implements Runnable
         return null;
     }
     
-
+    public void notifyExpressionExecuted()
+    {
+    	 for (int i = 0; i < sessions.length; i++)
+         {
+             SipSession session = sessions[i];
+             session.notifyExpressionExecuted();
+         }
+    }
+    
     public void run()
     {
         for (int i = 0; i < actions.length; i++)
@@ -126,10 +145,4 @@ public class SipSessionGroup implements Runnable
         }       
     }
     
-//    public VariableManager getVariableManager()
-//    {
-//        return varManager;
-//    }
 }
-
-    //public void run

@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.sip.address.URI;
 import javax.sip.message.Request;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import junit.framework.TestCase;
@@ -30,13 +31,28 @@ import org.hyk.sip.test.session.SessionMatcher;
  *
  */
 public abstract class HykSipUnitTestCase extends TestCase
-{
-   // private static HashMap beanBuilders = new HashMap();
+{ 
+    private static SessionManager sessionManager;
     
-    static
+    protected SessionManager getSessionManager() throws Exception
     {
-        //Runtime.getRuntime().addShutdownHook(new BeanBulderFinallizer());
-    } 
+    	if(null == sessionManager)
+    	{
+    		JAXBContext context = JAXBContext.newInstance(SessionManager.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            sessionManager = (SessionManager)unmarshaller.unmarshal(new File("hyk-jsipunit.xml"));
+            sessionManager.init();
+            if(this instanceof SessionMatcher)
+            {
+            	sessionManager.setSessionMatcher((SessionMatcher) this);
+            }
+            else
+            {
+            	sessionManager.setSessionMatcher(new RequestURIMatcher());
+            }
+    	}
+    	return sessionManager;
+    }
 	
     protected boolean isScriptInClasspath = true;
     class RequestURIMatcher implements SessionMatcher
@@ -72,19 +88,7 @@ public abstract class HykSipUnitTestCase extends TestCase
             actions[i] = (SessionAction)unmarshaller.unmarshal(is);
             actions[i].init();
         }     
-        JAXBContext context = JAXBContext.newInstance(SessionManager.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        SessionManager manager = (SessionManager)unmarshaller.unmarshal(new File("hyk-jsipunit.xml"));
-        manager.init();
-        if(this instanceof SessionMatcher)
-        {
-            manager.setSessionMatcher((SessionMatcher) this);
-        }
-        else
-        {
-            manager.setSessionMatcher(new RequestURIMatcher());
-        }
-        
+        SessionManager manager = getSessionManager();
         manager.execute(actions);
         return manager;
     }

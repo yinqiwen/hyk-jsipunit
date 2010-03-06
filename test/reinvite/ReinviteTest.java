@@ -10,7 +10,7 @@ import org.hyk.sip.test.HykSipUnitTestCase;
  * @author Silvis Kingwon
  *
  */
-public class ExampleTest extends HykSipUnitTestCase
+public class ReinviteTest extends HykSipUnitTestCase
 {
 
     public String[] getScriptLocations()

@@ -15,7 +15,10 @@ import javax.sip.message.Message;
 import javax.sip.message.MessageFactory;
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.hyk.sip.test.script.VarString;
 import org.hyk.sip.test.session.SipSession;
+
+import bsh.EvalError;
 
 
 public class SendAction extends MessaeAction
@@ -27,26 +30,28 @@ public class SendAction extends MessaeAction
 
 
 	private List<Header> headers = new ArrayList<Header>();
-    private List<String[]> headerVars = new LinkedList<String[]>();
+    private List<VarString> headerVars = new LinkedList<VarString>();
     
     public void init() throws Exception
     {
         HeaderFactory headerFactory = SipFactory.getInstance().createHeaderFactory();
         for (int i = 0; i < headerValues.size(); i++)
         {
-            String header = headerValues.get(i).trim();
-            int index = header.indexOf(':');
-            String name = header.substring(0, index).trim();
-            String value = header.substring(index + 1).trim();
-            if(value.contains("$"))
-            {
-                headerVars.add(new String[]{name, value});
-            }
-            else
-            {
-                Header h = headerFactory.createHeader(name, value);
-                headers.add(h);   
-            }
+        	VarString varHeader = headerValues.get(i);
+        	
+        	if(varHeader.containsVar())
+        	{
+        		headerVars.add(varHeader);
+        	}
+        	else
+        	{
+				String header = varHeader.getFormat().trim();
+				int index = header.indexOf(':');
+				String name = header.substring(0, index).trim();
+				String value = header.substring(index + 1).trim();
+				Header h = headerFactory.createHeader(name, value);
+				headers.add(h);
+        	}
         }
     }
 
@@ -56,46 +61,40 @@ public class SendAction extends MessaeAction
         {
             return headers;
         } 
-        else
+        List<Header> hs = new ArrayList<Header>();
+        HeaderFactory headerFactory = SipFactory.getInstance()
+                .createHeaderFactory();
+        hs.addAll(headers);
+        for (int i = 0; i < headerVars.size(); i++)
         {
-            List<Header> hs = new ArrayList<Header>();
-            HeaderFactory headerFactory = SipFactory.getInstance()
-                    .createHeaderFactory();
-            hs.addAll(headers);
-            for (int i = 0; i < headerVars.size(); i++)
-            {
-                String name = headerVars.get(i)[0];
-                String value = headerVars.get(i)[1];
-//                value = session.getSipSessionGroup().replaceVariableReference(
-//                        value);
-                Header h = headerFactory.createHeader(name, value);
-                hs.add(h);
-            }
-            headerVars.clear();
-            return hs;
+        	String header = headerVars.get(i).replaceVar(session.getInterpreter());
+        	int index = header.indexOf(':');
+			String name = header.substring(0, index).trim();
+			String value = header.substring(index + 1).trim();
+			Header h = headerFactory.createHeader(name, value);
+            hs.add(h);      
         }
+        //headerVars.clear();
+        return hs;
     }
     
     public int execute(SipSession session)
     {
         try
         {
-            String sentBody = body;
-            if(null != sentBody)
+            String sentBody = null;
+            if(null != body)
             {
-                //sentBody = session.getSipSessionGroup().replaceVariableReference(sentBody);
-                //VariableComposite var;
-                //var = new VariableComposite(sentBody, session.getSipSessionGroup().getVariableManager());
-                //sentBody = var.getValue().toString();   
+            	sentBody = body.replaceVar(session.getInterpreter());  
             }
-            headers = getAddedHeaders(session);
+            List<Header> sendHeaders = getAddedHeaders(session);
             if(response > 0)
             {
-                session.sendResponse(response, request, headers, sentBody, reliable);
+                session.sendResponse(response, request, sendHeaders, sentBody, reliable);
             }
             else
             {
-                session.sendRequest(request, headers, sentBody, dialog);   
+                session.sendRequest(request, sendHeaders, sentBody, !dialog);   
             }
         } catch (Exception e)
         {

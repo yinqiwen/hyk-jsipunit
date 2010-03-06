@@ -17,18 +17,17 @@ import bsh.EvalError;
  * @author Silvis Kingwon
  *
  */
-public class AssignAction extends Action
+public class ExecuteAction extends Action
 {
 	@XmlAttribute
     private String expression;
     
-
 	public int execute(SipSession session)
     {
-        //expr.setExpression(expression);
         try
         {
-        	interpreter.eval(expression);
+        	session.getInterpreter().eval(expression);
+        	session.getSipSessionGroup().notifyExpressionExecuted();
         } 
 		catch(EvalError e)
 		{

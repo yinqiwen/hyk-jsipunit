@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rules PUBLIC "-//HYK//DTD RULE//EN" "http://www.hyk.org/dtd/hyk-sipunit++.dtd">
 <phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
-    <assign expression="$x=0"/>
-    <while condition="$x!=10"/>
+    <execute expression="int x=0"/>
+    <while condition="x!=10"/>
         <send request="OPTIONS">
-          <header>AccessCode:$x</header>
+          <header var="x">AccessCode:%d</header>
           <header>Content-Type:application/sdp</header>
-          <body>hello$x world</body>
+          <body var="x">hello%d world</body>
         </send>
         <recv response="200" request="OPTIONS"/>
-        <assign expression="++$x"/>
+        <execute expression="++x"/>
     <done/>
 </phone>

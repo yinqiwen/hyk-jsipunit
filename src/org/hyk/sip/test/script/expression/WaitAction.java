@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.hyk.sip.test.script.Action;
 import org.hyk.sip.test.session.SipSession;
 
-public class WaitAction extends Action implements Runnable
+public class WaitAction extends Action implements Runnable, ExpressionListener
 {
 	@XmlAttribute
     private String condition;
@@ -31,60 +31,45 @@ public class WaitAction extends Action implements Runnable
         this.session = session;
         if(null != condition)
         {
-            //expression.setExpression(condition);
             try
             {
-            	Boolean b = (Boolean) (interpreter.eval(condition));
+            	Boolean b = (Boolean) (session.getInterpreter().eval(condition));
                 if(b)
                 {
                    return 1; 
                 }
-                //session.getSipSessionGroup().getVariableManager().registerVariableListener(expression.getFirstVariable().getName(), this);
             } catch (Exception e)
             {               
                 e.printStackTrace();
             }
         }
+       
         timerTask =  session.getTimer().schedule(this, time, TimeUnit.MILLISECONDS);
         return 0;
     }
 
     public void run()
     {
-        //if(null == expression)
-    	if(true)
+    	if(null == condition || evalBooleanCondition(condition, session))
         {
             session.execute(1);
         }
         else
         {
-            session.terminated("Timeout when waiting condition:" + condition +" succeed!");
-            //System.out.println("Timeout!" + expression.getVar().getName());   
+            session.terminated("Timeout when waiting condition:" + condition +" succeed!");  
         }
     }
 
-//    public void notifyVariableUpdate(Variable var)
-//    {
-//        try
-//        {
-//            Boolean b = (Boolean) (expression.execute(condition).getValue());
-//            //System.out.println("Notify" + b);
-//            if(b)
-//            {
-//                timerTask.cancel(true);
-//                session.execute(1);
-//            }
-//            
-//        } catch (ParseException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        } catch (VariableInstantialException e)
-//        {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        
-//    }
+
+	@Override
+	public void afterExpressionExecuted()
+	{
+		if(null != condition && evalBooleanCondition(condition, session))
+		{
+			timerTask.cancel(true);
+            session.execute(1);
+		}
+		
+	}
 
 }

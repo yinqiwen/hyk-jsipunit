@@ -1,7 +1,7 @@
 /**
  * 
  */
-package outofdlg;
+package control;
 
 import org.hyk.sip.test.HykSipUnitTestCase;
 
@@ -10,12 +10,12 @@ import org.hyk.sip.test.HykSipUnitTestCase;
  * @author Silvis Kingwon
  *
  */
-public class ExampleTest extends HykSipUnitTestCase
+public class ControlTest extends HykSipUnitTestCase
 {
 
     public String[] getScriptLocations()
     {
-        return new String[]{"caller.xml","callee.xml"};
+        return new String[]{"caller.xml"};
     }
     
 }

@@ -1,33 +1,27 @@
 package org.hyk.sip.test.script.message;
 
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.sip.InvalidArgumentException;
 import javax.sip.PeerUnavailableException;
-import javax.sip.SipException;
 import javax.sip.SipFactory;
 import javax.sip.header.Header;
 import javax.sip.header.HeaderFactory;
-import javax.sip.message.Message;
-import javax.sip.message.MessageFactory;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hyk.sip.test.script.VarString;
 import org.hyk.sip.test.session.SipSession;
 
-import bsh.EvalError;
 
-
-public class SendAction extends MessaeAction
+public class SendAction extends MessageAction
 {
 	@XmlAttribute
     private boolean reliable;
 	@XmlAttribute
     private boolean dialog = true;
-
 
 	private List<Header> headers = new ArrayList<Header>();
     private List<VarString> headerVars = new LinkedList<VarString>();

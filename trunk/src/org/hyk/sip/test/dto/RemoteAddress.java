@@ -3,9 +3,7 @@
  */
 package org.hyk.sip.test.dto;
 
-import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @version 0.1.0

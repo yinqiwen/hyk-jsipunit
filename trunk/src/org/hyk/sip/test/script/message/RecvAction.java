@@ -5,7 +5,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.sip.header.CSeqHeader;
-import javax.sip.header.Header;
 import javax.sip.message.Message;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
@@ -13,7 +12,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hyk.sip.test.session.SipSession;
 
-public class RecvAction extends MessaeAction implements Runnable
+public class RecvAction extends MessageAction implements Runnable
 {
 	@XmlAttribute
 	private long					time				= 60000;

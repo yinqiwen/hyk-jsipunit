@@ -9,7 +9,7 @@
       <echo message="Silvis Kingwon!"/>   
    <fi/>
    <while condition="x!=10"/>
-      <echo format="x=%d,y=%d" message="x,y"/>
+      <echo message="x=%d,y=%d" var="x,y"/>
       <execute expression="++x"/>
       <if condition="x==5"/>
           <echo message="Got 5 one time!"/>   
@@ -20,9 +20,9 @@
 
    <echo message="Got input input"/> 
     <execute expression="String input=&quot;hello321world123&quot;"/>
-    <echo format="%s" message="input" /> 
+    <echo message="%s" var="input" /> 
    <regex assign="num1,num2" pattern="hello([0-9]*)world([0-9]*)" input="input"/>
-   <echo format="Got %s and %s" message="num1,num2"/> 
+   <echo message="Got %s and %s" var="num1,num2"/> 
 
    
 </phone>

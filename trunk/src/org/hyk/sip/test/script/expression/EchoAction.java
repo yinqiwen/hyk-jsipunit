@@ -24,16 +24,16 @@ public class EchoAction extends Action
 	private String	message;
 
 	@XmlAttribute
-	private String	format;
+	private String	var;
 
 	public int execute(SipSession session)
 	{
 		String echoMessage = null;
-		if(null != format)
+		if(null != var)
 		{
 			try
 			{
-				String[] formats = message.split(",");
+				String[] formats = var.split(",");
 				Object[] args = new Object[formats.length];
 				for(int i = 0; i < formats.length; i++)
 				{
@@ -44,7 +44,7 @@ public class EchoAction extends Action
 					}
 				}
 				session.getInterpreter().set("args", args);
-				session.getInterpreter().set("format", format);
+				session.getInterpreter().set("format", message);
 				echoMessage = (String)session.getInterpreter().eval("java.lang.String.format(format, args)");
 			}
 			catch(EvalError e)

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
+<phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS" uri-type="tel">
    <echo message="what"/>
+    <send request="INVITE" />
 </phone>

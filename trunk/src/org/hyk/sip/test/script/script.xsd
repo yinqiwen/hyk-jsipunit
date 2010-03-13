@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="MessageActionType">
+	      <xs:sequence>
+	         <xs:choice>
+	         <xs:element name="header" type="xs:string" />
+	         </xs:choice>
+	       
+		    </xs:sequence>
+		    
+		
+		<xs:attribute name="request" type="xs:string" />
+		<xs:attribute name="response" type="xs:string" />
+		<xs:attribute name="optional" type="xs:boolean" />
+		<xs:attribute name="reliable" type="xs:boolean" />
+		<xs:attribute name="time" type="xs:string" />
+		<xs:attribute name="dialog" type="xs:boolean" />
+	</xs:complexType>
+
+	<xs:complexType name="PauseActionType">
+		<xs:attribute name="time" type="xs:positiveInteger" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="WaitActionType">
+		<xs:attribute name="time" type="xs:positiveInteger" use="required" />
+		<xs:attribute name="condition" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="ExecuteActionType">
+		<xs:attribute name="expression" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="EchoActionType">
+		<xs:attribute name="message" type="xs:string" use="required" />
+		<xs:attribute name="var" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="IfActionType">
+		<xs:attribute name="condition" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="RegexActionType">
+		<xs:attribute name="pattern" type="xs:string" use="required" />
+		<xs:attribute name="input" type="xs:string" use="required" />
+		<xs:attribute name="assign" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="EmptyElement">
+	</xs:complexType>
+
+	<xs:element name="phone">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="send" type="MessageActionType" />
+					<xs:element name="recv" type="MessageActionType" />
+					<xs:element name="pause" type="PauseActionType" />
+					<xs:element name="wait" type="WaitActionType" />
+					<xs:element name="execute" type="ExecuteActionType" />
+					<xs:element name="echo" type="EchoActionType" />
+					<xs:element name="if" type="IfActionType" />
+					<xs:element name="fi" type="EmptyElement" />
+					<xs:element name="else" type="EmptyElement" />
+					<xs:element name="reset" type="EmptyElement" />
+					<xs:element name="while" type="IfActionType" />
+					<xs:element name="done" type="EmptyElement" />
+					<xs:element name="regex" type="RegexActionType" />
+					<xs:element name="assert" type="IfActionType" />
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required" />
+			<xs:attribute name="location" type="xs:string" use="required" />
+			<xs:attribute name="remote-phone" type="xs:string" />
+			<xs:attribute name="remote-location" type="xs:string" />
+			<xs:attribute name="uri-type" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -20,7 +20,7 @@ import org.hyk.sip.test.script.VarString;
  * @author Silvis Kingwon
  * 
  */
-public abstract class MessaeAction extends Action
+public abstract class MessageAction extends Action
 {
 
 	protected String		request;

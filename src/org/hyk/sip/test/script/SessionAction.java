@@ -47,7 +47,7 @@ public class SessionAction
 
 	@XmlAttribute(name="remote-location")
 	private String			remoteLocation;
-
+	
 	private URIType			uriType	= URIType.SIP;
 	private boolean			isPassiveMode;
 
@@ -113,6 +113,12 @@ public class SessionAction
 	public URIType getURIType()
 	{
 		return uriType;
+	}
+	
+	@XmlAttribute(name="uri-type")
+	public void setURIType(String type)
+	{
+		uriType = Enum.valueOf(URIType.class, type);
 	}
 
 	public boolean isPassiveMode()

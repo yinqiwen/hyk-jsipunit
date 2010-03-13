@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.Semaphore;
 
@@ -17,9 +16,6 @@ import javax.sip.ServerTransaction;
 import javax.sip.SipException;
 import javax.sip.SipProvider;
 import javax.sip.Transaction;
-import javax.sip.TransactionState;
-import javax.sip.TransactionUnavailableException;
-import javax.sip.address.Address;
 import javax.sip.address.SipURI;
 import javax.sip.address.URI;
 import javax.sip.header.CSeqHeader;

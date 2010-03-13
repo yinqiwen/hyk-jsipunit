@@ -10,7 +10,6 @@
 package org.hyk.sip.test.script;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import bsh.EvalError;

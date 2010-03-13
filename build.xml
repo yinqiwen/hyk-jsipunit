@@ -9,7 +9,7 @@
 	<property name="docdir" value="${root}/doc" />
 	<property name="srcroot" value="${root}/src" />
 	<property name="testroot" value="${root}/test" />
-	<property name="junit_jar" value="${root}/lib/junit.jar" />
+	<property name="junit_jar" value="${root}/lib/junit-4.8.1.jar" />
 	<property name="log_jar" value="${root}/lib/log4j-1.2.14.jar" />
 	<property name="sl4j_jar" value="${root}/lib/slf4j-api-1.5.10.jar" />
 	<property name="sip_jar" value="${root}/lib/jain-sip-sdp-1.2.102.jar" />
@@ -25,7 +25,7 @@
 	</target>
 	
 	<target name="compile" depends="prepare">
-	    <javac debug="on" srcdir="${srcroot}" destdir="${classes}" >
+	    <javac debug="on" srcdir="${srcroot}" destdir="bin" >
 	        <classpath>
 	        	<pathelement location="${junit_jar}" />
 	        	<pathelement location="${log_jar}" />

@@ -32,6 +32,6 @@
    <recv response="200" request="BYE"/>
    <execute expression="int status=RECV_MSGS.get(&quot;07556000001&quot;).getStatusCode()"/>
    <assert condition="status==200"/>
-   <echo format="response code is %d" message="status"/>
+   <echo message="response code is %d" var="status"/>
    
 </phone>

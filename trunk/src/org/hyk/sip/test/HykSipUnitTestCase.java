@@ -4,6 +4,7 @@
 package org.hyk.sip.test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.sip.address.URI;
@@ -16,28 +17,49 @@ import javax.xml.bind.ValidationEventHandler;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
+import junit.framework.TestCase;
+
 import org.hyk.sip.test.script.SessionAction;
 import org.hyk.sip.test.session.SessionManager;
 import org.hyk.sip.test.session.SessionMatcher;
-import org.junit.Assert;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version 0.1.0
  * @author Silvis Kingwon
  * 
  */
-public abstract class HykSipUnitTestCase
+public abstract class HykSipUnitTestCase extends TestCase
 {
 	private static SessionManager	sessionManager;
 
+	protected Logger				logger	= LoggerFactory.getLogger(getClass());
+
+	protected void onSetUp(){}
+	protected void onTearDown(){}
+	
+	@Override
+	protected final void setUp() throws Exception
+	{
+		super.setUp();
+		onSetUp();
+	}
+	
+	@Override
+	protected final void tearDown() throws Exception
+	{
+		super.tearDown();
+		onTearDown();
+	}
+	
 	protected SessionManager getSessionManager() throws Exception
 	{
 		if(null == sessionManager)
 		{
 			JAXBContext context = JAXBContext.newInstance(SessionManager.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
-			sessionManager = (SessionManager)unmarshaller.unmarshal(new File("hyk-jsipunit.xml"));
+			sessionManager = (SessionManager)unmarshaller.unmarshal(ClassLoader.getSystemResourceAsStream("hyk-jsipunit.xml"));
 			sessionManager.init();
 			if(this instanceof SessionMatcher)
 			{
@@ -64,6 +86,13 @@ public abstract class HykSipUnitTestCase
 	}
 
 	public abstract String[] getScriptLocations();
+	
+	protected String getTestCaseName()
+	{
+		return getClass().getName();
+	}
+	
+
 
 	private SessionManager proceed(String[] scripts) throws Exception
 	{
@@ -78,7 +107,7 @@ public abstract class HykSipUnitTestCase
 			}
 			else
 			{
-				scripts[i] = "file:" + scripts[i];
+				is = new FileInputStream(scripts[i]);
 			}
 
 			JAXBContext context = JAXBContext.newInstance(SessionAction.class);
@@ -90,22 +119,33 @@ public abstract class HykSipUnitTestCase
 			{
 				public boolean handleEvent(ValidationEvent event)
 				{
-					return true;
+					return false;
 				}
 			});
 			actions[i] = (SessionAction)unmarshaller.unmarshal(is);
 			actions[i].init();
+			is.close();
 		}
 		SessionManager manager = getSessionManager();
 		manager.execute(actions);
 		return manager;
 	}
 
-	@Test
+	// @Test
 	public void testSipMessage() throws Exception
 	{
+		if(logger.isInfoEnabled())
+		{
+			String msg = String.format("#############################Start hyk-sipunit test case:%s################################", getTestCaseName());
+			logger.info(msg);
+		}
 		String[] scripts = getScriptLocations();
 		SessionManager manager = proceed(scripts);
-		Assert.assertNull("Expected succeed to execute, but got fail with casue:" + manager.getExecuteResult(), manager.getExecuteResult());
+		if(logger.isInfoEnabled())
+		{
+			String msg = String.format("#############################End hyk-sipunit test case:%s################################", getTestCaseName());
+			logger.info(msg);
+		}
+		assertNull("Expected succeed to execute, but got fail with casue:" + manager.getExecuteResult(), manager.getExecuteResult());	
 	}
 }

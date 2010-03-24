@@ -29,6 +29,10 @@ public class RecvAction extends MessageAction implements Runnable
 
 	public void init() throws Exception
 	{
+		if(null == headerValues)
+		{
+			return;
+		}
 		for(int i = 0; i < headerValues.size(); i++)
 		{
 			String header = headerValues.get(i).getFormat().trim();

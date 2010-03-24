@@ -2,7 +2,7 @@
 <phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS">
    <execute expression="int x=0"/>
    <execute expression="int y=1+2*3+5.6"/>
-   <echo format="%d" message="y"/> 
+   <echo message="%d" var="y"/> 
    <if condition="x!=1"/>
       <echo message="Hello,wolrd!"/>
    <else/>

@@ -28,7 +28,7 @@ public abstract class MessageAction extends Action
 	protected int			response	= -1;
 	
 	@XmlElements(@XmlElement(name = "header"))
-	protected List<VarString>	headerValues = new ArrayList<VarString>();
+	protected List<VarString>	headerValues;
 
 	protected VarString		body;
 	protected List<Header>	headers		= new ArrayList<Header>();

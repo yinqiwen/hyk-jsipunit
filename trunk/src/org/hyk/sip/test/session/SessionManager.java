@@ -37,8 +37,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hyk.sip.test.constant.Constants;
-import org.hyk.sip.test.dto.RemoteAddress;
-import org.hyk.sip.test.dto.TestConfig;
+import org.hyk.sip.test.common.RemoteAddress;
 import org.hyk.sip.test.script.SessionAction;
 import org.hyk.sip.test.stack.HykSipunitStack;
 import org.slf4j.Logger;
@@ -75,8 +74,6 @@ public class SessionManager implements SipListener
     
     @XmlElement(name="threadpool")
     private ThreadPool threadpool;
-    //private ScheduledThreadPoolExecutor threadpool = null;
-    private TestConfig test;
     
     private int limitCaseNumber;
     private TagGenerator tagGenerator = new TagGenerator();

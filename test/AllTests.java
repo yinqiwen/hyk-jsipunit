@@ -1,6 +1,3 @@
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
 import control.ControlTest;
 import outofdlg.OutDlgTest;
 import reinvite.ReinviteTest;
@@ -23,14 +20,17 @@ import junit.framework.TestSuite;
 /**
  *
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses( 
-		{EchoTest.class, 
-		 CancelTest.class, 
-		 ControlTest.class, 
-		 ExampleTest.class, 
-		 OutDlgTest.class, 
-		 ReinviteTest.class})
 public class AllTests
 {
+	public static Test suite()
+	{
+		TestSuite suite = new TestSuite("hyk-jsipunit");
+		suite.addTestSuite(EchoTest.class);
+		suite.addTestSuite(CancelTest.class);
+		suite.addTestSuite(ControlTest.class);
+		suite.addTestSuite(ExampleTest.class);
+		suite.addTestSuite(OutDlgTest.class);
+		suite.addTestSuite(ReinviteTest.class);
+		return suite;
+	}
 }

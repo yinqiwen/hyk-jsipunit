@@ -7,6 +7,13 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
 import org.hyk.sip.test.HykSipUnitTestCase;
 
 /**
@@ -16,17 +23,23 @@ import org.hyk.sip.test.HykSipUnitTestCase;
  */
 public class Launcher extends HykSipUnitTestCase
 {
-    private static final String USAGE = "hyk-jsipunit: A sip test framework\r\n\r\n" + 
-                                        "Usage: hst -d <directory>\r\n"
-                                       +"           -v";
     private static String[] scripts = null;
+    private static String testCaseName;
     
-    protected void onSetUp()
+    @Override
+	protected void onSetUp()
     {
         isScriptInClasspath = false;
     }
     
-    public String[] getScriptLocations()
+    @Override
+    protected String getTestCaseName()
+	{
+		return testCaseName;
+	}
+    
+    @Override
+	public String[] getScriptLocations()
     {
         return scripts;
     }
@@ -37,49 +50,50 @@ public class Launcher extends HykSipUnitTestCase
      */
     public static void main(String[] args) throws Exception
     {
-        if(null == args || (args.length != 1 && args.length != 2))
-        {
-            //do nothing
-        }
-        else
-        {
-            if(args.length == 1)
+    	//OptionBuilder.
+    	Option dirInput = OptionBuilder.withArgName("dir").hasArg().withDescription("scripts' directory").withLongOpt("directory").create("d");
+		Option version = OptionBuilder.withLongOpt("version").hasArg(false).withDescription("print the version information and exit").create("v");
+		Options options = new Options();
+		options.addOption(dirInput);
+		options.addOption( version );
+		CommandLineParser parser = new GnuParser();
+    	
+		CommandLine line = parser.parse(options, args);
+		if(line.hasOption("d"))
+		{
+			String dirStr = line.getOptionValue("d");
+			testCaseName = dirStr;
+			File dir = new File(dirStr);
+            if(dir.isDirectory())
             {
-                if(args[0].trim().equals("-v"))
+                String[] files = dir.list();
+                List<String> xmlFiles = new LinkedList<String>();
+                for (int i = 0; i < files.length; i++)
                 {
-                    
+                    if(files[i].endsWith(".xml"))
+                    {
+                        xmlFiles.add(dir.getAbsolutePath() + System.getProperty("file.separator") + files[i]);
+                    }
                 }
+                if(!xmlFiles.isEmpty())
+                {
+                	 scripts = new String[xmlFiles.size()];
+                     xmlFiles.toArray(scripts);
+                     junit.textui.TestRunner.main(new String[]{"org.hyk.sip.test.launcher.Launcher"});
+                     return;
+                }
+                System.out.println(dirStr + " MUST contains XML script files!");        	
             }
             else
             {
-                if(args[0].trim().equals("-d"))
-                {
-                    String directory = args[1].trim();
-                    File dir = new File(directory);
-                    if(dir.isDirectory())
-                    {
-                        Launcher launcher = new Launcher();
-                        String[] files = dir.list();
-                        //System.out.println(dir.getAbsolutePath());
-                        List<String> xmlFiles = new LinkedList<String>();
-                        for (int i = 0; i < files.length; i++)
-                        {
-                            if(files[i].endsWith(".xml"))
-                            {
-                                xmlFiles.add(dir.getAbsolutePath() + System.getProperty("file.separator") + files[i]);
-                            }
-                        }
-                        scripts = new String[xmlFiles.size()];
-                        xmlFiles.toArray(scripts);
-                        junit.textui.TestRunner.main(new String[]{"org.hyk.sip.test.launcher.Launcher"});
-                        return;
-                    }
-                }
+            	System.out.println(dirStr + " MUST be a directory!");
             }
-        }
-               
-        System.err.println("Wrong argument!");
-        System.out.println(USAGE);
+		}
+		
+		HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp( "hjst.sh/hjst.bat", options );
+        System.exit(-1);
+		
     }
 
     

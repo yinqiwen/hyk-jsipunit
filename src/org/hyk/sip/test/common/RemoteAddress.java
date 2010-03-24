@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.hyk.sip.test.dto;
+package org.hyk.sip.test.common;
 
 import javax.xml.bind.annotation.XmlAttribute;
 

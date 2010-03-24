@@ -14,6 +14,6 @@ public class CancelTest extends HykSipUnitTestCase
 {
     public String[] getScriptLocations()
     {
-        return new String[]{"caller.xml","callee.xml"};
+        return new String[]{"callee.xml", "caller.xml"};
     }   
 }

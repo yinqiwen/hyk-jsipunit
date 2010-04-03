@@ -7,7 +7,7 @@ import org.hyk.sip.test.session.SipSession;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class FiAction extends ControlAction

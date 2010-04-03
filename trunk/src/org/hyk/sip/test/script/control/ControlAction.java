@@ -10,7 +10,7 @@ import org.hyk.sip.test.script.Action;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public abstract class ControlAction extends Action

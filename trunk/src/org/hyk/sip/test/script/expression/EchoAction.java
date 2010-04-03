@@ -15,7 +15,7 @@ import bsh.EvalError;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  * 
  */
 public class EchoAction extends Action

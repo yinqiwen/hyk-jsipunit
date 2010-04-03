@@ -30,7 +30,7 @@
    
    <send request="BYE"/>
    <recv response="200" request="BYE"/>
-   <execute expression="int status=RECV_MSGS.get(&quot;07556000001&quot;).getStatusCode()"/>
+   <execute expression="int status=RECV_MSGS.get('''07556000001''').getStatusCode()"/>
    <assert condition="status==200"/>
    <echo message="response code is %d" var="status"/>
    

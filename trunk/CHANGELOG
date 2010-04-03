@@ -1,0 +1,28 @@
+hyk-jsipunit Changelog
+===================
+
+Changes in version 0.2.0 (2010.3.6)
+-------------------------------------------
+
+** Bug
+
+** Improvement
+   * Use BSH as the intercepter
+   * Use JAXB parse xml
+
+** Task
+
+Changes in version 0.1.0 (2008.11.13)
+-------------------------------------------
+
+** Bug
+
+** Improvement
+   * More error information when failed
+   * Log suuport
+   * support replace rule configuration 
+
+** Task
+   * full function
+
+

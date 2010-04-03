@@ -18,7 +18,7 @@ import org.hyk.sip.test.HykSipUnitTestCase;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class Launcher extends HykSipUnitTestCase
@@ -52,10 +52,10 @@ public class Launcher extends HykSipUnitTestCase
     {
     	//OptionBuilder.
     	Option dirInput = OptionBuilder.withArgName("dir").hasArg().withDescription("scripts' directory").withLongOpt("directory").create("d");
-		Option version = OptionBuilder.withLongOpt("version").hasArg(false).withDescription("print the version information and exit").create("v");
+		//Option version = OptionBuilder.withLongOpt("version").hasArg(false).withDescription("print the version information and exit").create("v");
 		Options options = new Options();
 		options.addOption(dirInput);
-		options.addOption( version );
+		//options.addOption( version );
 		CommandLineParser parser = new GnuParser();
     	
 		CommandLine line = parser.parse(options, args);

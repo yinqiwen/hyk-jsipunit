@@ -2,8 +2,11 @@
 <hyk-jsipunit>
    <threadpool coresize="20"/>  
  
+   <!--Local sipstack named 'SoftSwitch' listen on '127.0.0.1:5060' -->
    <sipstack name="SoftSwitch"  host="127.0.0.1" port="5060"/>  
    <sipstack name="MRS" host="127.0.0.1" port="5080"/>
    
-   <remote name="AS" host="127.0.0.1" port="5080"/>   
+   <!--Remote sip app named 'AS' -->
+   <remote name="AS" host="127.0.0.1" port="5080"/> 
+   <remote name="B2BUA" host="192.168.1.102" port="5090"/>     
 </hyk-jsipunit>

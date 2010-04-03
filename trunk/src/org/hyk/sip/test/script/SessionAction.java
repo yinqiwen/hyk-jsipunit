@@ -3,7 +3,6 @@
  */
 package org.hyk.sip.test.script;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -29,7 +28,7 @@ import org.hyk.sip.test.session.SipSession;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  * 
  */
 @XmlRootElement(name = "phone")

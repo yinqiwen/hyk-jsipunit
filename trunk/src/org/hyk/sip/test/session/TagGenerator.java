@@ -5,7 +5,7 @@ package org.hyk.sip.test.session;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class TagGenerator

@@ -2,5 +2,11 @@
 <phone id="07556000001" location="SoftSwitch" remote-phone="07556123" remote-location="AS" uri-type="tel">
   
    <pause time="1000"/>
-    <echo message="what"/>
+   <echo message="what"/>
+   <!--use ''' instead of " -->
+   <execute expression="String input='''hello321world123'''"/>
+   <!-- or
+    <execute expression="String input=&quot;hello321world123&quot;"/>
+    -->
+   <execute expression="System.out.println(input)"/>
 </phone>

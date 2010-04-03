@@ -3,8 +3,6 @@
  */
 package org.hyk.sip.test.script.control;
 
-import java.text.ParseException;
-
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.hyk.sip.test.session.SipSession;
@@ -13,7 +11,7 @@ import bsh.EvalError;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class IfAction extends ControlAction

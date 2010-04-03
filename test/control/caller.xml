@@ -16,11 +16,13 @@
       <fi/>
    <done/>
    <assert condition="x==10"/>
-  
-
+ 
    <echo message="Got input input"/> 
+   <execute expression="String input='''hello321world123'''"/>
+    <!-- or
     <execute expression="String input=&quot;hello321world123&quot;"/>
-    <echo message="%s" var="input" /> 
+    -->
+   <echo message="%s" var="input" /> 
    <regex assign="num1,num2" pattern="hello([0-9]*)world([0-9]*)" input="input"/>
    <echo message="Got %s and %s" var="num1,num2"/> 
 

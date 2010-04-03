@@ -3,7 +3,6 @@
  */
 package org.hyk.sip.test.session;
 
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -17,7 +16,7 @@ import bsh.Interpreter;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class SipSessionGroup implements Runnable

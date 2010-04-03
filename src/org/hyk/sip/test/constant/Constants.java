@@ -15,7 +15,7 @@ import javax.sip.message.MessageFactory;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class Constants

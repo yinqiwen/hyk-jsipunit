@@ -3,7 +3,6 @@
  */
 package org.hyk.sip.test.script.expression;
 
-import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +13,7 @@ import org.hyk.sip.test.session.SipSession;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 public class RegexAction extends Action

@@ -3,7 +3,6 @@
  */
 package org.hyk.sip.test;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  * 
  */
 public abstract class HykSipUnitTestCase extends TestCase
@@ -91,8 +90,6 @@ public abstract class HykSipUnitTestCase extends TestCase
 	{
 		return getClass().getName();
 	}
-	
-
 
 	private SessionManager proceed(String[] scripts) throws Exception
 	{

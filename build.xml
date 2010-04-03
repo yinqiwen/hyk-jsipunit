@@ -17,7 +17,7 @@
 	<property name="sip_jar" value="${root}/lib/jain-sip-sdp-1.2.102.jar" />
 	<property name="bsh_jar" value="${root}/lib/bsh-2.0b4.jar" />
 
-	<property name="version" value="0.2.0beta2" />
+	<property name="version" value="0.2.0" />
 	<property name="release" value="release" />
 	<property name="project_name" value="hyk-jsipunit" />
 
@@ -68,11 +68,8 @@
 				<include name="etc/**/*"/>
 				<include name="test/**/*"/>
 				<include name="lib/**/*"/>
-				<include name="doc/**/*"/>
 				<include name="*.xml"/>
-				<include name="README"/>
 				<include name="CHANGELOG"/>
-				<include name="TODO"/>
 			</fileset>
 		</copy>
 		<copy todir="${release}/${project_name}-${version}/bin">

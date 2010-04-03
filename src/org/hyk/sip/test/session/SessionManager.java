@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @version 0.1.0
- * @author Silvis Kingwon
+ * @author yinqiwen
  *
  */
 @XmlRootElement(name="hyk-jsipunit")
@@ -163,10 +163,7 @@ public class SessionManager implements SipListener
             session.execute(0);
             return true;
         }
-        else
-        {
-            return false;
-        }
+		return false;
     }
     
     private void processMessage(Message msg, SipProvider provider, Transaction transc)
@@ -187,53 +184,49 @@ public class SessionManager implements SipListener
             matchSession.execute(0);
             return;
         }
-        else
-        {
-            if(msg instanceof Request)
-            {
-                Iterator<Integer> keys = notReadyGroups.keySet().iterator();
-                while(keys.hasNext())
-                {
-                    Integer key = keys.next();
-                    SipSessionGroup group = notReadyGroups.get(key);
-                    if(processMessageIfMatch(provider, transc, (Request) msg, group))
-                    {
-                        if(group.isAllSessionReady())
-                        {
-                            notReadyGroups.remove(key);
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-                try
-                {
-                    SipSessionGroup group = createSipSessionGroup();
-                    if(processMessageIfMatch(provider, transc, (Request) msg, group))
-                    {
-                        return;
-                    }
-                } catch (Exception e)
-                {
-                    if(logger.isDebugEnabled())
-                    {
-                        logger.debug("Exception occured when create session group.", e);
-                    }
-                }
-            }
-            else
-            {
-                //do nothing  
-            }
-            if(logger.isDebugEnabled())
-            {
-                logger.debug("Discard unmatched message:\n" + msg);
-            }
-        }
-        //System.out.println("Recv4=====" + msg);
+		if(msg instanceof Request)
+		{
+		    Iterator<Integer> keys = notReadyGroups.keySet().iterator();
+		    while(keys.hasNext())
+		    {
+		        Integer key = keys.next();
+		        SipSessionGroup group = notReadyGroups.get(key);
+		        if(processMessageIfMatch(provider, transc, (Request) msg, group))
+		        {
+		            if(group.isAllSessionReady())
+		            {
+		                notReadyGroups.remove(key);
+		            }
+		            return;
+		        }
+		        else
+		        {
+		            continue;
+		        }
+		    }
+		    try
+		    {
+		        SipSessionGroup group = createSipSessionGroup();
+		        if(processMessageIfMatch(provider, transc, (Request) msg, group))
+		        {
+		            return;
+		        }
+		    } catch (Exception e)
+		    {
+		        if(logger.isDebugEnabled())
+		        {
+		            logger.debug("Exception occured when create session group.", e);
+		        }
+		    }
+		}
+		else
+		{
+		    //do nothing  
+		}
+		if(logger.isDebugEnabled())
+		{
+		    logger.debug("Discard unmatched message:\n" + msg);
+		}
     }
     
     public void processDialogTerminated(DialogTerminatedEvent event)
@@ -285,7 +278,7 @@ public class SessionManager implements SipListener
     {
         if(logger.isDebugEnabled())
         {
-            logger.error("Receive TimeoutEvent from sipstack!"  + event);
+            logger.debug("Receive TimeoutEvent from sipstack!"  + event);
         } 
     }
 
@@ -293,7 +286,7 @@ public class SessionManager implements SipListener
     {
         if(logger.isDebugEnabled())
         {
-            logger.error("Receive TransactionTerminatedEvent from sipstack!"  + event);
+            logger.debug("Receive TransactionTerminatedEvent from sipstack!"  + event);
         }        
     }
     
